@@ -21,7 +21,7 @@ from flower_shop import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('flower_shop.urls')),
+    path('', include('webshop.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
