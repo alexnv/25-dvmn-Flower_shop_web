@@ -7,26 +7,38 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import FlowersBunch, CategoryPrice, Reason, Order
 
 
-def index_page(request):
-    orders = Order.objects.filter(order_status='raw_order')
-    orders_params = [
-        {
-            'id': order.id,
-            'firstname': order.firstname,
-            'lastname': order.lastname,
-            'phonenumber': order.phonenumber,
-            'address': order.address,
-            'delivered_at': order.delivered_at,
-            'order_status': order.get_order_status_display(),
-            'payment': order.get_method_payment_display(),
-            'order_price': order.bunch.price,
-            'bunch_name': order.bunch.name,
-            'bunch_id': order.bunch.id,
-            'comment': order.comment,
-        }
-        for order in orders]
+def show_catalog(request):
 
-    context = {'order_params': orders_params}
+    return render(
+        request, 
+        template_name='catalog.html',
+        context={},
+    )
+
+
+def index_page(request):
+    # orders = Order.objects.filter(order_status='raw_order')
+    # orders_params = [
+    #     {
+    #         'id': order.id,
+    #         'firstname': order.firstname,
+    #         'lastname': order.lastname,
+    #         'phonenumber': order.phonenumber,
+    #         'address': order.address,
+    #         'delivered_at': order.delivered_at,
+    #         'order_status': order.get_order_status_display(),
+    #         'payment': order.get_method_payment_display(),
+    #         'order_price': order.bunch.price,
+    #         'bunch_name': order.bunch.name,
+    #         'bunch_id': order.bunch.id,
+    #         'comment': order.comment,
+    #     }
+    #     for order in orders]
+
+    flowers_bunch = FlowersBunch.objects.filter(recommended=True)
+    print(flowers_bunch)
+
+    context = {'flowers_bunch': flowers_bunch}
     return render(request, template_name='index.html', context=context)
 
 

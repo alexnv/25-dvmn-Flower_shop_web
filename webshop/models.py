@@ -51,31 +51,22 @@ class FlowersBunch(models.Model):
     )
 
     description = models.TextField(
-        verbose_name='смысл букета'
+        verbose_name='смысл букета',
+        blank=True,
     )
 
     composition = models.TextField(
-        verbose_name='цветочный состав букета'
+        verbose_name='цветочный состав букета',
+        blank=True,
     )
-
-    reason = models.ForeignKey(
-        Reason,
-        related_name='bunchs',
-        verbose_name="повод для букета",
-        on_delete=models.CASCADE,
-    )
-
-    category = models.ForeignKey(
-        CategoryPrice,
-        related_name='bunchs',
-        verbose_name="ценовая категория",
-        on_delete=models.CASCADE,
+    recommended = models.BooleanField(
+        verbose_name='Рекомендован',
+        default=False,
     )
 
     class Meta:
         db_table = 'flower'
         verbose_name = 'букет'
-
         verbose_name_plural = 'букеты'
 
     def __str__(self):
