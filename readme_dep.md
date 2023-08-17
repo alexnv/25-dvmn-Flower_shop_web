@@ -8,7 +8,7 @@ Host bakecake
     ForwardAgent yes
 ```
 
-Заходим на сервак и создаем ппользователя
+Заходим на сервак и создаем пользователя
 useradd curator -m -s /bin/bash 
 пепреходим в корень
 cd ~
