@@ -1,33 +1,58 @@
 from random import choice
 
+import requests
+from django.db.models import Count
 from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import FlowersBunch, CategoryPrice, Reason, Order
+from flower_shop import settings
+from .models import FlowersBunch, CategoryPrice, Reason, Order, Lead
 
 
 def index_page(request):
-    orders = Order.objects.filter(order_status='raw_order')
-    orders_params = [
-        {
-            'id': order.id,
-            'firstname': order.firstname,
-            'lastname': order.lastname,
-            'phonenumber': order.phonenumber,
-            'address': order.address,
-            'delivered_at': order.delivered_at,
-            'order_status': order.get_order_status_display(),
-            'payment': order.get_method_payment_display(),
-            'order_price': order.bunch.price,
-            'bunch_name': order.bunch.name,
-            'bunch_id': order.bunch.id,
-            'comment': order.comment,
-        }
-        for order in orders]
+    recommended_bouquets = FlowersBunch.objects.annotate(name_count=Count('name')).order_by('-name_count')[:3]
 
-    context = {'order_params': orders_params}
-    return render(request, template_name='index.html', context=context)
+    context = {'recommended_bouquets': recommended_bouquets}
+    return render(request, template_name='index.jinja2', context=context)
+
+
+def catalog_page(request):
+    context = {}
+    return render(request, template_name="catalog.jinja2", context=context)
+
+
+def quiz_page(request):
+    context = {}
+    return render(request, template_name="quiz.html", context=context)
+
+
+@csrf_exempt
+def add_callback_lead(request):
+    if request.method == 'POST':
+        fname = request.POST.get('fname')
+        tel = request.POST.get('tel')
+        lead = Lead.objects.create(
+            name=fname,
+            phonenumber=tel
+        )
+        lead.save()
+        send_message(
+            settings.TG_FLORIST_CHAT_ID,
+            f'Новый лид заказал звонок!\nИмя: {fname} \nТелефон: {tel}'
+        )
+
+    return redirect('index_page')
+
+
+def send_message(chat_id, text):
+    url = f'https://api.telegram.org/bot{settings.TG_TOKEN}/sendMessage'
+    data = {
+        'text': text,
+        'chat_id': chat_id,
+    }
+    response = requests.post(url, json=data)
+    response.raise_for_status()
 
 
 @csrf_exempt

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -174,3 +176,37 @@ class Order(models.Model):
 
     def __str__(self):
         return self.firstname
+
+
+class Lead(models.Model):
+    name = models.CharField(
+        verbose_name='Имя',
+        max_length=50,
+        db_index=True
+    )
+
+    phonenumber = PhoneNumberField(
+        verbose_name='номер телефона',
+        region='RU',
+        db_index=True
+    )
+
+    created_at = models.DateTimeField(
+        verbose_name='дата обращения',
+        db_index=True,
+        default=datetime.now
+    )
+
+    called_at = models.DateTimeField(
+        verbose_name='дата звонка',
+        null=True,
+        blank=True,
+        db_index=True
+    )
+
+    class Meta:
+        verbose_name = 'Лид'
+        verbose_name_plural = 'Лиды'
+
+    def __str__(self):
+        return f"{self.name} - {self.phonenumber}"

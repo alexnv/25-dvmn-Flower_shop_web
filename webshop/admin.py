@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.utils.html import format_html
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from .models import Reason, CategoryPrice, FlowersBunch, Order
+from .models import Reason, CategoryPrice, FlowersBunch, Order, Lead
 
 
 class FlowersBunchTabularInline(admin.TabularInline):
@@ -68,3 +68,9 @@ class FlowersBunchAdmin(admin.ModelAdmin):
 
     def category(self, obj):
         return obj.category.name
+
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
+    model = Lead
+    list_display = ['name', 'phonenumber']
