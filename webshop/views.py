@@ -1,15 +1,19 @@
 from random import choice
 
+from django.db.models import Count
 from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST, require_GET
 
-from .models import FlowersBunch, CategoryPrice, Reason, Order
+from flower_shop import settings
+from .models import FlowersBunch, CategoryPrice, Reason, Order, Lead
 
 
+@require_GET
 def index_page(request):
-    recommended_bouquets = FlowersBunch.objects.annotate(name_count=Count('name')).order_by('-name_count')[:3]
-    flowers_bunch = FlowersBunch.objects.filter(recommended=True)
+    recommended_bouquets = FlowersBunch.objects.filter(recommended=True).annotate(name_count=Count('name')).order_by(
+        '-name_count')[:3]
 
     context = {'recommended_bouquets': recommended_bouquets}
     return render(request, template_name='index.jinja2', context=context)
@@ -26,6 +30,7 @@ def quiz_page(request):
 
 
 @csrf_exempt
+@require_POST
 def add_callback_lead(request):
     if request.method == 'POST':
         fname = request.POST.get('fname')

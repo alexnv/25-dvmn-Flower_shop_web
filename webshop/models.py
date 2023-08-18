@@ -13,7 +13,6 @@ class Reason(models.Model):
     class Meta:
         db_table = 'reason'
         verbose_name = 'повод'
-
         verbose_name_plural = 'поводы'
 
     def __str__(self):
@@ -29,7 +28,6 @@ class CategoryPrice(models.Model):
     class Meta:
         db_table = 'price'
         verbose_name = 'ценовая категория'
-
         verbose_name_plural = 'ценовые категории'
 
     def __str__(self):
@@ -64,6 +62,26 @@ class FlowersBunch(models.Model):
     recommended = models.BooleanField(
         verbose_name='Рекомендован',
         default=False,
+    )
+
+    reason = models.ForeignKey(
+        Reason,
+        related_name='bunchs',
+        verbose_name="повод для букета",
+        on_delete=models.CASCADE,
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    category = models.ForeignKey(
+        CategoryPrice,
+        related_name='bunchs',
+        verbose_name="ценовая категория",
+        on_delete=models.CASCADE,
+        default=None,
+        blank=True,
+        null=True,
     )
 
     class Meta:

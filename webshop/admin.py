@@ -20,14 +20,14 @@ class FlowersBunchTabularInline(admin.TabularInline):
                            url=obj.image.url)
 
 
-# @admin.register(Reason)
-# class ReasonAdmin(admin.ModelAdmin):
-#     inlines = [FlowersBunchTabularInline, ]
+@admin.register(Reason)
+class ReasonAdmin(admin.ModelAdmin):
+    inlines = [FlowersBunchTabularInline, ]
 
 
-# @admin.register(CategoryPrice)
-# class CategoryPriceAdmin(admin.ModelAdmin):
-#     inlines = [FlowersBunchTabularInline, ]
+@admin.register(CategoryPrice)
+class CategoryPriceAdmin(admin.ModelAdmin):
+    inlines = [FlowersBunchTabularInline, ]
 
 
 @admin.register(Order)
