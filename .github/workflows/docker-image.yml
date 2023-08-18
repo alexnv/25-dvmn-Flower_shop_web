@@ -16,4 +16,4 @@ jobs:
       env:
         DEBUG: True
         SECRET_KEY: 12345
-        ALLOWED_HOSTS: 81.163.28.136
+        ALLOWED_HOSTS: 77.223.98.76
