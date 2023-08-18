@@ -1,17 +1,15 @@
 from random import choice
 
-import requests
-from django.db.models import Count
 from django.http.response import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from flower_shop import settings
-from .models import FlowersBunch, CategoryPrice, Reason, Order, Lead
+from .models import FlowersBunch, CategoryPrice, Reason, Order
 
 
 def index_page(request):
     recommended_bouquets = FlowersBunch.objects.annotate(name_count=Count('name')).order_by('-name_count')[:3]
+    flowers_bunch = FlowersBunch.objects.filter(recommended=True)
 
     context = {'recommended_bouquets': recommended_bouquets}
     return render(request, template_name='index.jinja2', context=context)

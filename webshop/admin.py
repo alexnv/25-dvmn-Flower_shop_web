@@ -20,14 +20,14 @@ class FlowersBunchTabularInline(admin.TabularInline):
                            url=obj.image.url)
 
 
-@admin.register(Reason)
-class ReasonAdmin(admin.ModelAdmin):
-    inlines = [FlowersBunchTabularInline, ]
+# @admin.register(Reason)
+# class ReasonAdmin(admin.ModelAdmin):
+#     inlines = [FlowersBunchTabularInline, ]
 
 
-@admin.register(CategoryPrice)
-class CategoryPriceAdmin(admin.ModelAdmin):
-    inlines = [FlowersBunchTabularInline, ]
+# @admin.register(CategoryPrice)
+# class CategoryPriceAdmin(admin.ModelAdmin):
+#     inlines = [FlowersBunchTabularInline, ]
 
 
 @admin.register(Order)
@@ -53,7 +53,7 @@ class OrderPriceAdmin(admin.ModelAdmin):
 @admin.register(FlowersBunch)
 class FlowersBunchAdmin(admin.ModelAdmin):
     model = FlowersBunch
-    list_display = ['name', 'preview', 'price', 'reason', 'category']
+    list_display = ['name', 'preview', 'price', 'recommended']
 
     readonly_fields = ['preview']
 
