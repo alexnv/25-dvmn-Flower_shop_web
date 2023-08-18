@@ -16,12 +16,12 @@ def index_page(request):
         '-name_count')[:3]
 
     context = {'recommended_bouquets': recommended_bouquets}
-    return render(request, template_name='index.jinja2', context=context)
+    return render(request, template_name='index.html', context=context)
 
 
 def catalog_page(request):
     context = {}
-    return render(request, template_name="catalog.jinja2", context=context)
+    return render(request, template_name="catalog.html", context=context)
 
 
 def quiz_page(request):
