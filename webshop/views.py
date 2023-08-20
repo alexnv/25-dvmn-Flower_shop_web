@@ -20,7 +20,13 @@ def index_page(request):
 
 
 def catalog_page(request):
-    context = {}
+    bouquets = FlowersBunch.objects.all()[:6]
+    bouquets_first = bouquets[:3]
+    bouquets_second = bouquets[3:6]
+    context = {
+        'bouquets_first': bouquets_first,
+        'bouquets_second': bouquets_second,
+    }
     return render(request, template_name="catalog.html", context=context)
 
 
