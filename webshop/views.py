@@ -256,3 +256,12 @@ def remove_order(request) -> JsonResponse:
     response = {
         'message': 'Тогда давайте заполним заново. Введите ваше имя'}
     return JsonResponse(response, status=200)
+
+
+def show_card(request, 
+              #bouquet
+              ):
+    context = {
+        # 'bouquet': bouquet
+        }
+    return render(request, template_name='card.html', context=context)
