@@ -13,9 +13,8 @@
                                 <div class="recommended__block_elems ficb ">
                                     <span class="recommended__block_intro">{{ bunch.name }}</span>
                                     <span class="recommended__block_price">{{ bunch.price }} руб.</span>
-                                    <a href="{% url 'order' bunch_id=bunch.id step=1 %}">
-                                        Заказать этот букет
-                                    </a>
+                                    <span class="recommended__block_price"><a
+                                            href="{% url 'card' id=bunch.id %}">Подробнее</a></span>
                                 </div>
 
                             </div>
