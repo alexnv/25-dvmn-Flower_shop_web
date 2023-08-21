@@ -1,5 +1,6 @@
 from random import choice
 
+import requests
 from django.db.models import Count
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
