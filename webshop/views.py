@@ -31,7 +31,7 @@ def catalog_page(request):
     return render(request, template_name="catalog.html", context=context)
 
 
-def quiz_page(request):
+def quiz_page(request, step):
     context = {}
     return render(request, template_name="quiz.html", context=context)
 
@@ -316,6 +316,6 @@ def remove_order(request) -> JsonResponse:
 
 def show_card(request, id):
     context = {
-         'bouquet': get_object_or_404(FlowersBunch, id=id),
-        }
+        'bouquet': get_object_or_404(FlowersBunch, id=id),
+    }
     return render(request, template_name='card.html', context=context)
