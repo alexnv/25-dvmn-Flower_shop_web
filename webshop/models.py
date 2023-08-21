@@ -126,6 +126,15 @@ class Order(models.Model):
         db_index=True
     )
 
+    ordertime = models.CharField(
+        verbose_name='Интервал доставки',
+        max_length=50,
+        blank=True,
+        default='Как можно скорее',
+        db_index=True
+
+    )
+
     address = models.CharField(
         max_length=100,
         verbose_name='адрес'
@@ -168,6 +177,8 @@ class Order(models.Model):
 
     delivered_at = models.DateTimeField(
         verbose_name='дата доставки',
+        null=True,
+        blank=True,
         db_index=True
     )
 

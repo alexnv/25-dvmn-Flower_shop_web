@@ -1,0 +1,54 @@
+{% extends 'base_flower_shop.html' %}
+{% load static %}
+
+{% block content %}
+    <section id="orderStep">
+        <div class="container">
+            <div class="order orderStep">
+                <div class="order__block">
+                    <div class="order_items">
+                        <div class="title">Оплата</div>
+                        <form action="{% url 'order' bunch_id=bunch_id step=3 %}" class="order__form orderStep_form"
+                              method="post">
+                            {% csrf_token %}
+                            <div class="order__form_block">
+                                <div class="order__form_items">
+                                    <div class="order__form_intro">номер карты</div>
+                                    <input type="text" name="cardNum" class="order__form_input orderStep_form_input"
+                                           placeholder="Введите номер" required>
+                                    <div class="order__form_item fic">
+                                        <input type="text" name="cardMm" class="order__form_input orderStep_form_input"
+                                               placeholder="ММ" required>
+                                        <input type="text" name="cardGg" class="order__form_input orderStep_form_input"
+                                               placeholder="ГГ" required>
+                                    </div>
+
+                                    <input type="text" name="cardFname" class="order__form_input orderStep_form_input"
+                                           placeholder="Имя владельца" required>
+                                    <input type="text" name="cardCvc" class="order__form_input orderStep_form_input"
+                                           placeholder="CVC" required>
+                                </div>
+                                <div class="order__form_items">
+                                    <div class="order__form_intro">Ваш e-mail (необязательно)</div>
+                                    <input type="email" name="mail" class="order__form_input orderStep_form_input"
+                                           placeholder="pochta@mail.ru">
+                                </div>
+                            </div>
+                            <div class="order__form_line"></div>
+                            <input type="text" name="fname" hidden="true" value="{{ fname }}">
+                            <input type="text" name="tel" hidden="true" value="{{ tel }}">
+                            <input type="text" name="adres" hidden="true" value="{{ adres }}">
+                            <input type="text" name="orderTime" hidden="true" value="{{ orderTime }}">
+                            <div class="order__form_btns ficb">
+                                <button class="btn order__form_pay" type="submit">Оплатить</button>
+                                <button class="btn order__form_btn">Назад</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="blockImgHiden"></div> -->
+                </div>
+            </div>
+        </div>
+        <img src="{% static 'img/orderImg.jpg' %}" alt="orderImg" class="order__img">
+    </section>
+{% endblock %}

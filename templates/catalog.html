@@ -2,35 +2,43 @@
 {% load static %}
 
 {% block content %}
-	<section id="catalog">
-		<div class="container p100">
-			<div class="catalog">
-				<div class="title">Все букеты</div>
-				  <div class="catalog__block">
-					<div class="recommended__elems ficb recommended__elems_first">
-						{% for bunch in bouquets_first %}
-						  <div class="recommended__block " style="background: url('{{ bunch.image.url }} ')">							
-							<div class="recommended__block_elems ficb " >
-								<span class="recommended__block_intro">{{ bunch.name }}</span>
-								<span class="recommended__block_price">{{ bunch.price }} руб.</span>
-							</div>
-						</div>
-						{% endfor %}						  					
-					</div>
-					<div class="recommended__elems ficb recommended__elems_sec">
-						{% for bunch in bouquets_second %}
-						<div class="recommended__block " style="background: url('{{ bunch.image.url }} ')">							
-							<div class="recommended__block_elems ficb " >
-								<span class="recommended__block_intro">{{ bunch.name }}</span>
-								<span class="recommended__block_price">{{ bunch.price }} руб.</span>
-							</div>
-							
-						</div>
-						{% endfor %}						
-					</div>
-					<button class="btn largeBtn catalog__btn">Показать ещё</button>
-				</div>
-			</div>
-		</div>
-	</section>
-	{% endblock %}
+    <section id="catalog">
+        <div class="container p100">
+            <div class="catalog">
+                <div class="title">Все букеты</div>
+                <div class="catalog__block">
+                    <div class="recommended__elems ficb recommended__elems_first">
+                        {% for bunch in bouquets_first %}
+                            <div class="recommended__block " style="background: url('{{ bunch.image.url }} ')">
+                                <div class="recommended__block_elems ficb ">
+                                    <span class="recommended__block_intro">{{ bunch.name }}</span>
+                                    <span class="recommended__block_price">{{ bunch.price }} руб.</span>
+                                    <a href="{% url 'order' bunch_id=bunch.id step=1 %}">
+                                        Заказать этот букет
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    <div class="recommended__elems ficb recommended__elems_sec">
+                        {% for bunch in bouquets_second %}
+                            <div class="recommended__block " style="background: url('{{ bunch.image.url }} ')">
+                                <div class="recommended__block_elems ficb ">
+                                    <span class="recommended__block_intro">{{ bunch.name }}</span>
+                                    <span class="recommended__block_price">{{ bunch.price }} руб.</span>
+                                    <a href="{% url 'order' bunch_id=bunch.id step=1 %}">
+                                        Заказать этот букет
+                                    </a>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="btn largeBtn catalog__btn">Показать ещё</button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

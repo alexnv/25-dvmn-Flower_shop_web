@@ -52,7 +52,62 @@ def add_callback_lead(request):
             f'Новый лид заказал звонок!\nИмя: {fname} \nТелефон: {tel}'
         )
 
-    return redirect('index_page')
+    return redirect('thankyou')
+
+
+@csrf_exempt
+def order_page(request, bunch_id, step):
+    if step == '1':
+        context = {
+            'bunch_id': bunch_id
+        }
+        return render(request, template_name="order_step1.html", context=context)
+    if step == '2':
+        if request.method == 'POST':
+            fname = request.POST.get('fname')
+            tel = request.POST.get('tel')
+            adres = request.POST.get('adres')
+            orderTime = request.POST.get('orderTime')
+
+            context = {
+                'fname': fname,
+                'tel': tel,
+                'adres': adres,
+                'orderTime': orderTime,
+                'bunch_id': bunch_id
+
+            }
+            return render(request, template_name="order_step2.html", context=context)
+    if step == '3':
+        if request.method == 'POST':
+            fname = request.POST.get('fname')
+            tel = request.POST.get('tel')
+            adres = request.POST.get('adres')
+            orderTime = request.POST.get('orderTime')
+
+            order = Order.objects.create(
+                firstname=fname,
+                address=adres,
+                phonenumber=tel,
+                ordertime=orderTime,
+                bunch=FlowersBunch.objects.get(id=bunch_id)
+            )
+            message = f"""
+            Новый заказ: {order.id}
+            Клиент: {order.firstname}
+            Телефон: {order.phonenumber}
+            Адрес: {order.address}
+            Букет: 
+            {request.build_absolute_uri(order.bunch.image.url)}
+            Способ оплаты: {order.method_payment}
+            """
+            send_message(settings.TG_MANAGER_CHAT_ID, message)
+            return redirect('thankyou')
+
+
+def thankyou_page(request):
+    context = {}
+    return render(request, template_name="thankyou.html", context=context)
 
 
 def send_message(chat_id, text):
@@ -259,10 +314,10 @@ def remove_order(request) -> JsonResponse:
     return JsonResponse(response, status=200)
 
 
-def show_card(request, 
-              #bouquet
+def show_card(request,
+              # bouquet
               ):
     context = {
         # 'bouquet': bouquet
-        }
+    }
     return render(request, template_name='card.html', context=context)
