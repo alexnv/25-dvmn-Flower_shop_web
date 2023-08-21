@@ -2,7 +2,7 @@ from random import choice
 
 from django.db.models import Count
 from django.http.response import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 
@@ -258,10 +258,8 @@ def remove_order(request) -> JsonResponse:
     return JsonResponse(response, status=200)
 
 
-def show_card(request, 
-              #bouquet
-              ):
+def show_card(request, id):
     context = {
-        # 'bouquet': bouquet
+         'bouquet': get_object_or_404(FlowersBunch, id=id),
         }
     return render(request, template_name='card.html', context=context)

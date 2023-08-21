@@ -10,7 +10,7 @@ urlpatterns = [
     path('catalog/', catalog_page, name="catalog"),
     path('quiz/', quiz_page, name="quiz"),
     path('callback_add', add_callback_lead, name="lead_add"),
-    path('card/', show_card, name="card"),
+    path('card/<int:id>', show_card, name="card"),
     path('bunch/send/', send_bunch),
     path('categories/send/', send_categories),
     path('reasons/send/', send_reasons),
