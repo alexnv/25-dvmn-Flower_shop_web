@@ -12,7 +12,7 @@ urlpatterns = [
     path('quiz/', quiz_page, name="quiz"),
     path('callback_add', add_callback_lead, name="lead_add"),
     path('card/', show_card, name="card"),
-    path('order/<str:bunch_id>/<str:step>/', order_page, name="order"),
+    path('order/bunch-<str:bunch_id>/step-<str:step>/', order_page, name="order"),
     path('thankyou', thankyou_page, name="thankyou"),
     path('bunch/send/', send_bunch),
     path('categories/send/', send_categories),
